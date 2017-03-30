@@ -61,6 +61,20 @@
   window.addEventListener('keydown', function(e) {
     // var audio = document.querySelector("audio.a");
     var audio = document.querySelector(`audio[data-key='${e.keyCode}']`);
+    var key = document.querySelector(`.key[data-key='${e.keyCode}']`);
+    if (!audio) {
+      return;
+    }
+    key.classList.add('playing');
+
+    var removeTransition = (e) => {
+      // console.log(e.target.classList)
+      e.target.classList.remove('playing');
+    }
+
+    var keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+    // audio.currentTime = 0;
     audio.load();
     audio.play();
   });
